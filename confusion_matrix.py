@@ -89,4 +89,5 @@ def pr_curve(y_true, y_pred, y_proba):
     pr_display.plot(label = 'Precision-Recall curve (area = {0:0.2f})' ''.format(average_precision_score(y_true, y_pred)))
     plt.show()
 
+
 label = {'0': 'Non-STEMI', '1':'STEMI'}

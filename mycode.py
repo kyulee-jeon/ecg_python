@@ -121,3 +121,6 @@ def diff_days_min(df, dt_M, dt_m, criteria_1, criteria_2):
 
 print('{} Examples:\n    Total: {}\n    Positive: {} ({:.2f}% of total)\n    Negative: {} ({:.2f}% of total)\n'.format(
             name, total, pos, 100 * pos / total, neg, 100 * neg / total))
+
+# 열 type 변경
+df['col'] = df['col'].astype(int)
