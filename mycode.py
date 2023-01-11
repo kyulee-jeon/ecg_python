@@ -80,8 +80,8 @@ df.drop(index)
 
 # (1) 날짜 차이 계산
 def diff_days(df, dt_M, dt_m):
-    df['dt_M'] = pd.DatetimeIndex(df_trop[dt_M]).date
-    df['dt_m'] = pd.DatetimeIndex(df_trop[dt_m]).date
+    df['dt_M'] = pd.DatetimeIndex(df[dt_M]).date
+    df['dt_m'] = pd.DatetimeIndex(df[dt_m]).date
     
     df['dt_M'] = pd.to_datetime(df['dt_M'], format = '%Y-%m-%d', errors='raise')
     df['dt_m'] = pd.to_datetime(df['dt_m'], format = '%Y-%m-%d', errors='raise')
@@ -102,8 +102,8 @@ def diff_min(df, criteria_1, criteria_2, min_col):
 
 # (1+2) 날짜 차이 최소
 def diff_days_min(df, dt_M, dt_m, criteria_1, criteria_2):
-    df['dt_M'] = pd.DatetimeIndex(df_trop[dt_M]).date
-    df['dt_m'] = pd.DatetimeIndex(df_trop[dt_m]).date
+    df['dt_M'] = pd.DatetimeIndex(df[dt_M]).date
+    df['dt_m'] = pd.DatetimeIndex(df[dt_m]).date
     
     df['dt_M'] = pd.to_datetime(df['dt_M'], format = '%Y-%m-%d', errors='raise')
     df['dt_m'] = pd.to_datetime(df['dt_m'], format = '%Y-%m-%d', errors='raise')
