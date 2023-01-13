@@ -140,3 +140,6 @@ print('{} Examples:\n    Total: {}\n    Positive: {} ({:.2f}% of total)\n    Neg
 df['col'] = df['col'].astype(int)
 =======
 >>>>>>> 9a995cd8e038a056d9001a50e4c8a8bb82a032c0
+
+# df 확인
+print(df_date.nunique(), '\n\nshape: ', df_date.shape)
