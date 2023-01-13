@@ -78,6 +78,19 @@ def drop_dup(df, subset, sort):
 # 특정 행 제거
 df.drop(index)
 
+# 날짜 분 차이 계산 (new)
+def diff_days(df, dt_M, dt_m):
+    #df['dt_M'] = pd.DatetimeIndex(df[dt_M]).datetime
+    #df['dt_m'] = pd.DatetimeIndex(df[dt_m]).datetime
+    
+    df[dt_M] = pd.to_datetime(df[dt_M], format = '%Y-%m-%d %H:%M:%S', errors='raise')
+    df[dt_m] = pd.to_datetime(df[dt_m], format = '%Y-%m-%d %H:%M:%S', errors='raise')
+    
+    df['distance'] = df[dt_M] - df[dt_m]
+    df['distance'] = df['distance'].astype('timedelta64[m]') 
+    
+    return df
+
 # (1) 날짜 차이 계산
 def diff_days(df, dt_M, dt_m):
     df['dt_M'] = pd.DatetimeIndex(df[dt_M]).date
