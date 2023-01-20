@@ -106,8 +106,12 @@ def diff_days(df, dt_M, dt_m):
     df['distance'] = df['distance'].abs()
     return df
 
+
+diff_min(bb, 'AlsUnitNo', 'ED date', 'distance')
+
 # (2) 차이 최소 groupby
 def diff_min(df, criteria_1, criteria_2, min_col):
+    df[min_col] = pd.to_numeric(df[min_col])
     df_min = df.loc[df.groupby([criteria_1, criteria_2])[min_col].idxmin()]
     df_min = df_min.sort_values(by=[criteria_1], ascending = True)
     df_min = df_min.reset_index(drop=True)
