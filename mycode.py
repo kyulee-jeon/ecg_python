@@ -80,21 +80,25 @@ df.drop(index)
 
 # (1) 날짜 차이 계산
 def diff_days(df, dt_M, dt_m):
-    df['dt_M'] = pd.DatetimeIndex(df_trop[dt_M]).date
-    df['dt_m'] = pd.DatetimeIndex(df_trop[dt_m]).date
+    df['dt_M'] = pd.DatetimeIndex(df[dt_M]).date
+    df['dt_m'] = pd.DatetimeIndex(df[dt_m]).date
     
     df['dt_M'] = pd.to_datetime(df['dt_M'], format = '%Y-%m-%d', errors='raise')
     df['dt_m'] = pd.to_datetime(df['dt_m'], format = '%Y-%m-%d', errors='raise')
     
-    for i in range(len(df_trop)):
+    for i in range(len(df)):
         diff = df.loc[i, 'dt_M']- df.loc[i, 'dt_m']
         diff = diff.days
         df.loc[i, 'distance'] = diff
     df['distance'] = df['distance'].abs()
     return df
 
+
+diff_min(bb, 'AlsUnitNo', 'ED date', 'distance')
+
 # (2) 차이 최소 groupby
 def diff_min(df, criteria_1, criteria_2, min_col):
+    df[min_col] = pd.to_numeric(df[min_col])
     df_min = df.loc[df.groupby([criteria_1, criteria_2])[min_col].idxmin()]
     df_min = df_min.sort_values(by=[criteria_1], ascending = True)
     df_min = df_min.reset_index(drop=True)
