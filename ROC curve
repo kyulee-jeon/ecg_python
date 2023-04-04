@@ -1,0 +1,55 @@
+# ROC curve
+from sklearn.metrics import confusion_matrix, auc, roc_auc_score, recall_score, f1_score, balanced_accuracy_score, classification_report, roc_curve, precision_score
+def draw_curve(y_true, y_proba):
+    fpr = dict()
+    tpr = dict()
+    roc_auc = dict()
+    for i in range(y_true.shape[1]):
+        fpr[i], tpr[i], _ = roc_curve(y_true[:,i], y_proba[:, i])
+        roc_auc[i] = auc(fpr[i], tpr[i])
+    colors = cycle(['blue', 'lightseagreen'])
+    for i, color in zip(range(y_true.shape[1]), colors):
+        if i == 0:
+            pass
+        else:
+            plt.plot(fpr[i], tpr[i], color=color, lw=1.5, linestyle= 'dashdot', label='Training       AUC = {0:0.2f}' ''.format(roc_auc[i]))
+    
+    plt.plot([0, 1], [0, 1], lw=1.5, color='black', linestyle='dotted')
+    plt.xlim([-0.05, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('1-Specificity')
+    plt.ylabel('Sensitivity')
+    plt.legend(loc="lower right")
+    plt.show()
+
+label = {'0': 'Not-STEMI', '1':'STEMI'}
+
+
+
+
+# multiple results
+fpr = dict()
+tpr = dict()
+roc_auc = dict()
+
+
+fpr[1], tpr[1], _ = roc_curve(y_train[:,1], prob1_train[:, 1])
+roc_auc[1] = auc(fpr[1], tpr[1])
+plt.plot(fpr[1], tpr[1], color='lightseagreen', lw=1.5, linestyle= 'dashdot', label='Training       AUC = {0:0.3f}' ''.format(roc_auc[1]))
+
+fpr[2], tpr[2], _ = roc_curve(y_val[:,1], prob1_val[:, 1])
+roc_auc[2] = auc(fpr[2], tpr[2])
+plt.plot(fpr[2], tpr[2], color='coral', lw=1.5, linestyle= 'dashdot', label='Validation    AUC = {0:0.3f}' ''.format(roc_auc[2]))
+
+fpr[3], tpr[3], _ = roc_curve(y_test[:,1], prob1_test[:, 1])
+roc_auc[3] = auc(fpr[3], tpr[3])
+plt.plot(fpr[3], tpr[3], color='slategrey', lw=1.5, linestyle= 'dashdot', label='Testing         AUC = {0:0.3f}' ''.format(roc_auc[3]))
+
+plt.plot([0, 1], [0, 1], lw=1.5, color='black', linestyle='dotted')
+plt.xlim([-0.05, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('1-Specificity')
+plt.ylabel('Sensitivity')
+plt.legend(loc="lower right")
+#plt.gca().set_aspect('equal')  # set aspect ratio to be equal
+plt.show()
