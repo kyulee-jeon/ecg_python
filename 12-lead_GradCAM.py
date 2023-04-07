@@ -234,5 +234,34 @@ df_test.loc[df_test['Label']==0,'Label']='Control'
 #df_test.to_csv(m_path+'/test_probabilities_of_STEMI_0406.csv', index=True)
 
 
+#########################################################################################################
+# Saving all figures (8 - leads)
+for j in range(len(X_test)):
+    data = X_test[j]
+    data = np.expand_dims(data, 0)
+    label = ['I', 'II', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6']
+    fig, axs = plt.subplots(nrows=8, ncols=1, figsize=(30,40))
+    for i, lead in enumerate(label):
+        heatmap = grad_cam(model, layer_name, data)
+        heatmap = np.uint8(255 * heatmap)
+        heatmap = Image.fromarray(heatmap).resize((5000, 1))
+        axs[i].plot(X_test[data_index][:, i], 'k')
+        im = axs[i].imshow(np.expand_dims(heatmap,axis=2),cmap='Reds', aspect="auto", interpolation='nearest',extent=[0,5000,data.min(),data.max()],  alpha=0.8)
+        axs[i].set_title('Lead '+str(lead), fontdict={'fontsize': 25})
+        axs[i].tick_params(axis='both', which = 'major', labelsize=20)
+        axs[i].margins(x=0)
+    # create colorbar
+    cbar = fig.colorbar(im, ax=axs.ravel().tolist())
+    cbar.ax.tick_params(labelsize=20)
+    cbar.ax.set_position([.95, 0.17, 0.015, 1.2])
+
+    # adjust spacing between subplots
+    fig.subplots_adjust(hspace = 0.4)
+    plt.draw()
+    
+    # save it
+    filename = "sing_lead_{:03d}.png".format(j+1)
+    filepath =
+    fig.savefig(filepath + filename, dpi=fig.dpi)
 
 
