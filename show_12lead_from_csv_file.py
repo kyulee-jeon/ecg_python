@@ -1,6 +1,6 @@
 def show_12_waveform_fromDF(df, i):
     ecg_folder = '/home/ubuntu/dr-you-ecg-20220420_mount/220927_SevMUSE_EKG_waveform/'
-    fname = df.iloc[i, 4]
+    fname = df.iloc[i, 4]  # df 4열은 ecg_id (e.g. df_train, df_test, etc)
     df_x = pd.read_csv(ecg_folder+fname+'.csv')
     dc_x = df_x.to_dict('list')
     leads = list(dc_x.keys())
