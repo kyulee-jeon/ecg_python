@@ -53,3 +53,6 @@ def show_12_wvform(df, X_data, y_data, i):
     plt.tight_layout()
     plt.subplots_adjust(top=0.85)
     plt.show()
+
+    
+show_12_wvform(df_test, X_test, y_test, 3)
