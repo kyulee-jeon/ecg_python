@@ -1,7 +1,7 @@
 # X_data =  # (N, 5000, 8)
 # y_data =  # (N, 2)
 
-def cal_12lead(X_data, y_data):
+def cal_12lead_shape(X_data, y_data):
     lead12 = []
     for i in range(len(y_data)):
         df_x = pd.DataFrame(X_data[i])
@@ -23,6 +23,31 @@ def cal_12lead(X_data, y_data):
 
     stecg = np.array(lead12)
     print(stecg.shape)
+    return stecg
+
+
+def cal_12lead(X_data, y_data):
+    lead12 = []
+    for i in range(len(y_data)):
+        df_x = pd.DataFrame(X_data[i])
+        lead_I = df_x[0].to_numpy()
+        lead_II = df_x[1].to_numpy()
+
+        lead_III = (np.subtract(lead_II, lead_I)*(0.5)).astype(int)
+        lead_aVR = (np.add(lead_I, lead_II)*(-0.5)).astype(int)
+        lead_aVL = (np.subtract(1.5*lead_I, 0.5*lead_II)*(0.5)).astype(int)
+        lead_aVF = np.subtract(lead_II, 0.5*lead_I).astype(int)
+
+        df_x['III'] = lead_III
+        df_x['aVR'] = lead_aVR
+        df_x['aVL'] = lead_aVL
+        df_x['aVF'] = lead_aVF
+
+        np_x = df_x.to_numpy()
+        lead12.append(np_x)
+
+    stecg = np.array(lead12)
+    #print(stecg.shape)
     return stecg
 
 def make_ls(df):
